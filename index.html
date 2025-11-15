@@ -6,29 +6,35 @@
     <title>Hugging Face API - Chatbot</title>
 </head>
 <body>
-    <h1>Hugging Face4 GPT-2 Model</h1>
+    <h1>Hugging Face GPT-2 Model</h1>
     <textarea id="question" rows="4" cols="50"></textarea><br><br>
     <button onclick="ask()">Ask GPT-2</button>
     <p id="answer"></p>
 
     <script>
         async function ask() {
+            // الحصول على النص المدخل من المستخدم
             const question = document.getElementById('question').value;
-            const HF_API_KEY = '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';  // Your API Key
+            const HF_API_KEY = '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';  // مفتاح API الخاص بك
 
             try {
-                const response = await fetch('https://cors-proxy.htmldriven.com/fetch/https://api-inference.huggingface.co/models/moonshotai/Kimi-K2-Thinking:novita', {
+                // استخدام CORS Anywhere كـ Proxy لتجاوز مشكلة CORS
+                const response = await fetch('https://cors-anywhere.herokuapp.com/https://api-inference.huggingface.co/models/moonshotai/Kimi-K2-Thinking:novita', {
                     method: 'POST',
                     headers: {
-                        'Authorization': `Bearer ${HF_API_KEY}`,
-                        'Content-Type': 'application/json'
+                        'Authorization': `Bearer ${HF_API_KEY}`,  // إضافة مفتاح API
+                        'Content-Type': 'application/json',       // تحديد نوع البيانات كـ JSON
+                        'X-Requested-With': 'XMLHttpRequest'      // إضافة هذا الهيدر لتجاوز CORS
                     },
                     body: JSON.stringify({
-                        inputs: question
+                        inputs: question  // إرسال النص المدخل من المستخدم
                     })
                 });
 
+                // تحويل الاستجابة إلى JSON
                 const data = await response.json();
+                
+                // عرض النتيجة في الصفحة
                 document.getElementById('answer').textContent = data.choices ? data.choices[0].text : 'No response from model';
             } catch (error) {
                 console.error('Error:', error);
