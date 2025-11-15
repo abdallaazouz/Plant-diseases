@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> ‘€Ì· „ÊœÌ· Hugging Face ⁄»— CORS</title>
+</head>
+<body>
+
+    <h1>«”√· «·„ÊœÌ·</h1>
+    <label for="question">«œŒ· ”ƒ«·ﬂ: </label>
+    <input type="text" id="question" placeholder="√œŒ· ”ƒ«·ﬂ Â‰«">
+    <button id="askBtn">«”√·</button>
+
+    <h2>«·≈Ã«»…:</h2>
+    <p id="answer"></p>
+
+    <script>
+        document.getElementById('askBtn').addEventListener('click', ask);
+
+        async function ask() {
+            const question = document.getElementById('question').value;
+            const apiKey = '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';  // «” »œ· »‹ API Key «·Œ«’ »ﬂ „‰ Hugging Face
+            const model = 'gpt2';  // «” Œœ„ «·„ÊœÌ· «·–Ì  —€» ›ÌÂ
+
+            // «” Œœ«„ CORS Proxy „Œ ·› („À· ThingProxy)
+            const proxyUrl = 'https://thingproxy.freeboard.io/fetch/';
+            const url = `https://api-inference.huggingface.co/models/${model}`;
+
+            try {
+                // √—”· «·ÿ·» »«” Œœ«„ CORS Proxy
+                const response = await fetch(proxyUrl + url, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${apiKey}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ inputs: question })
+                });
+
+                const modelData = await response.json();
+                if (modelData && modelData.generated_text) {
+                    document.getElementById('answer').textContent = modelData.generated_text;
+                } else {
+                    document.getElementById('answer').textContent = "·„   „ «·≈Ã«»… ⁄·Ï «·”ƒ«·.";
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('answer').textContent = "ÕœÀ Œÿ√ √À‰«¡ «·« ’«· »«·„ÊœÌ·.";
+            }
+        }
+    </script>
+
+</body>
+</html>
