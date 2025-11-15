@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ÊÔÛíá ãæÏíá Hugging Face ÚÈÑ CORS</title>
+    <title>ØªØ´ØºÙŠÙ„ Ù…ÙˆØ¯ÙŠÙ„ Hugging Face Ø¹Ø¨Ø± CORS</title>
 </head>
 <body>
 
-    <h1>ÇÓÃá ÇáãæÏíá</h1>
-    <label for="question">ÇÏÎá ÓÄÇáß: </label>
-    <input type="text" id="question" placeholder="ÃÏÎá ÓÄÇáß åäÇ">
-    <button id="askBtn">ÇÓÃá</button>
+    <h1>Ø§Ø³Ø£Ù„ Ø§Ù„Ù…ÙˆØ¯ÙŠÙ„</h1>
+    <label for="question">Ø§Ø¯Ø®Ù„ Ø³Ø¤Ø§Ù„Ùƒ: </label>
+    <input type="text" id="question" placeholder="Ø£Ø¯Ø®Ù„ Ø³Ø¤Ø§Ù„Ùƒ Ù‡Ù†Ø§">
+    <button id="askBtn">Ø§Ø³Ø£Ù„</button>
 
-    <h2>ÇáÅÌÇÈÉ:</h2>
+    <h2>Ø§Ù„Ø¥Ø¬Ø§Ø¨Ø©:</h2>
     <p id="answer"></p>
 
     <script>
@@ -20,15 +20,15 @@
 
         async function ask() {
             const question = document.getElementById('question').value;
-            const apiKey = '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';  // ÇÓÊÈÏá ÈÜ API Key ÇáÎÇÕ Èß ãä Hugging Face
-            const model = 'gpt2';  // ÇÓÊÎÏã ÇáãæÏíá ÇáĞí ÊÑÛÈ İíå
+            const apiKey = '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';  // Ø§Ù„ØªÙˆÙƒÙ† Ø§Ù„Ø°ÙŠ Ù‚Ù…Øª Ø¨ØªÙ‚Ø¯ÙŠÙ…Ù‡
+            const model = 'gpt2';  // Ø§Ø³ØªØ®Ø¯Ù… Ø§Ù„Ù…ÙˆØ¯ÙŠÙ„ Ø§Ù„Ø°ÙŠ ØªØ±ØºØ¨ ÙÙŠÙ‡
 
-            // ÇÓÊÎÏÇã CORS Proxy ãÎÊáİ (ãËá ThingProxy)
-            const proxyUrl = 'https://thingproxy.freeboard.io/fetch/';
+            // Ø§Ø³ØªØ®Ø¯Ù… CORS Proxy Ù…Ø®ØªÙ„Ù Ù…Ø«Ù„ "https://cors-anywhere.herokuapp.com/"
+            const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
             const url = `https://api-inference.huggingface.co/models/${model}`;
 
             try {
-                // ÃÑÓá ÇáØáÈ ÈÇÓÊÎÏÇã CORS Proxy
+                // Ø£Ø±Ø³Ù„ Ø§Ù„Ø·Ù„Ø¨ Ø¨Ø§Ø³ØªØ®Ø¯Ø§Ù… CORS Proxy
                 const response = await fetch(proxyUrl + url, {
                     method: 'POST',
                     headers: {
@@ -42,11 +42,11 @@
                 if (modelData && modelData.generated_text) {
                     document.getElementById('answer').textContent = modelData.generated_text;
                 } else {
-                    document.getElementById('answer').textContent = "áã ÊÊã ÇáÅÌÇÈÉ Úáì ÇáÓÄÇá.";
+                    document.getElementById('answer').textContent = "Ù„Ù… ØªØªÙ… Ø§Ù„Ø¥Ø¬Ø§Ø¨Ø© Ø¹Ù„Ù‰ Ø§Ù„Ø³Ø¤Ø§Ù„.";
                 }
             } catch (error) {
                 console.error('Error:', error);
-                document.getElementById('answer').textContent = "ÍÏË ÎØÃ ÃËäÇÁ ÇáÇÊÕÇá ÈÇáãæÏíá.";
+                document.getElementById('answer').textContent = "Ø­Ø¯Ø« Ø®Ø·Ø£ Ø£Ø«Ù†Ø§Ø¡ Ø§Ù„Ø§ØªØµØ§Ù„ Ø¨Ø§Ù„Ù…ÙˆØ¯ÙŠÙ„.";
             }
         }
     </script>
